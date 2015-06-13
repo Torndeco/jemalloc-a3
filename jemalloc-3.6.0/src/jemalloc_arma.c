@@ -5,18 +5,18 @@ typedef BOOL bool;
 
 #include "jemalloc.h"
 #include "jemalloc/internal/jemalloc_internal.h"
-#include <stdlib.h>	
+#include <stdlib.h>
 
-#define DLL_EXPORT __declspec(dllexport)
+#ifdef A3MALLOC
+__declspec(dllexport) size_t __stdcall MemTotalCommitted() { return MappedMemory; }
+__declspec(dllexport) size_t __stdcall MemTotalReserved() { return MappedMemory; }
 
-DLL_EXPORT size_t __stdcall MemTotalCommitted() { return MappedMemory; }
-DLL_EXPORT size_t __stdcall MemTotalReserved() { return MappedMemory; }
-
-DLL_EXPORT size_t __stdcall MemFlushCache(size_t size) { return size; }
-DLL_EXPORT void __stdcall MemFlushCacheAll() { tcache_flush(); }
-DLL_EXPORT size_t __stdcall MemSize(void *mem) { return je_malloc_usable_size(mem); }
-DLL_EXPORT void *__stdcall MemAlloc(size_t size) { return je_malloc(size); }
-DLL_EXPORT void __stdcall MemFree(void *mem) { je_free(mem); }
+__declspec(dllexport) size_t __stdcall MemFlushCache(size_t size) { return size; }
+__declspec(dllexport) void __stdcall MemFlushCacheAll() { tcache_flush(); }
+__declspec(dllexport) size_t __stdcall MemSize(void *mem) { return je_malloc_usable_size(mem); }
+__declspec(dllexport) void *__stdcall MemAlloc(size_t size) { return je_malloc(size); }
+__declspec(dllexport) void __stdcall MemFree(void *mem) { je_free(mem); }
+#endif
 
 BOOL WINAPI DllMain( HINSTANCE hInst, DWORD callReason, LPVOID c)
 {
@@ -26,7 +26,7 @@ BOOL WINAPI DllMain( HINSTANCE hInst, DWORD callReason, LPVOID c)
   }
   else if (callReason==DLL_PROCESS_DETACH)
   {
-	je_uninit();
+	  je_uninit();
   }
   return TRUE;
 }
