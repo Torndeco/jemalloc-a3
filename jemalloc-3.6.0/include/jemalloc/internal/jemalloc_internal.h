@@ -612,6 +612,7 @@ void	jemalloc_postfork_child(void);
 #endif
 
 #ifdef ARMA_EXTENSION
+BOOL LargePageSupport;
 uint32_t MappedMemory;
 #endif
 
