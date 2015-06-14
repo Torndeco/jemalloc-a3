@@ -25,14 +25,16 @@ pages_map(void *addr, size_t size)
 	 */
 	ret = VirtualAlloc(addr, size, MEM_COMMIT | MEM_RESERVE,
 	    PAGE_READWRITE);
+#ifdef ARMA_EXTENSION
     if (ret)
     {
       MEMORY_BASIC_INFORMATION info;
       if (VirtualQuery(ret,&info,sizeof(info))==sizeof(info))
       {
-		  je_atomic_add_uint32(&MappedMemory, info.RegionSize);
+		      je_atomic_add_uint32(&MappedMemory, info.RegionSize);
       }
     }
+#endif
     return ret;
 #else
 	/*
@@ -71,6 +73,7 @@ pages_unmap(void *addr, size_t size)
 {
 
 #ifdef _WIN32
+#ifdef ARMA_EXTENSION
 	if (addr)
 	{
 		MEMORY_BASIC_INFORMATION info;
@@ -79,6 +82,7 @@ pages_unmap(void *addr, size_t size)
 			je_atomic_sub_uint32(&MappedMemory, info.RegionSize);
 		}
 	}
+#endif
 	if (VirtualFree(addr, 0, MEM_RELEASE) == 0)
 #else
 	if (munmap(addr, size) == -1)

@@ -611,7 +611,9 @@ void	jemalloc_postfork_child(void);
 #include "msvc_compat/win_sbrk.h"
 #endif
 
+#ifdef ARMA_EXTENSION
 uint32_t MappedMemory;
+#endif
 
 #ifndef JEMALLOC_ENABLE_INLINE
 malloc_tsd_protos(JEMALLOC_ATTR(unused), arenas, arena_t *)

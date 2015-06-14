@@ -1,3 +1,4 @@
+#ifdef ARMA_EXTENSION
 #include <windows.h>
 #ifndef __cplusplus
 typedef BOOL bool;
@@ -7,7 +8,6 @@ typedef BOOL bool;
 #include "jemalloc/internal/jemalloc_internal.h"
 #include <stdlib.h>
 
-#ifdef A3MALLOC
 __declspec(dllexport) size_t __stdcall MemTotalCommitted() { return MappedMemory; }
 __declspec(dllexport) size_t __stdcall MemTotalReserved() { return MappedMemory; }
 
@@ -16,7 +16,6 @@ __declspec(dllexport) void __stdcall MemFlushCacheAll() { tcache_flush(); }
 __declspec(dllexport) size_t __stdcall MemSize(void *mem) { return je_malloc_usable_size(mem); }
 __declspec(dllexport) void *__stdcall MemAlloc(size_t size) { return je_malloc(size); }
 __declspec(dllexport) void __stdcall MemFree(void *mem) { je_free(mem); }
-#endif
 
 BOOL WINAPI DllMain( HINSTANCE hInst, DWORD callReason, LPVOID c)
 {
@@ -26,7 +25,8 @@ BOOL WINAPI DllMain( HINSTANCE hInst, DWORD callReason, LPVOID c)
   }
   else if (callReason==DLL_PROCESS_DETACH)
   {
-	  je_uninit();
+	je_uninit();
   }
   return TRUE;
 }
+#endif
