@@ -73,16 +73,6 @@ pages_unmap(void *addr, size_t size)
 {
 
 #ifdef _WIN32
-#ifdef ARMA_EXTENSION
-	if (addr)
-	{
-		MEMORY_BASIC_INFORMATION info;
-		if (VirtualQuery(addr, &info, sizeof(info)) == sizeof(info))
-		{
-			je_atomic_sub_uint32(&MappedMemory, info.RegionSize);
-		}
-	}
-#endif
 	if (VirtualFree(addr, 0, MEM_RELEASE) == 0)
 #else
 	if (munmap(addr, size) == -1)
@@ -101,6 +91,16 @@ pages_unmap(void *addr, size_t size)
 		if (opt_abort)
 			abort();
 	}
+#ifdef ARMA_EXTENSION
+  else if (addr)
+	{
+		MEMORY_BASIC_INFORMATION info;
+		if (VirtualQuery(addr, &info, sizeof(info)) == sizeof(info))
+		{
+			je_atomic_sub_uint32(&MappedMemory, info.RegionSize);
+		}
+	}
+#endif
 }
 
 static void *
