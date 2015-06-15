@@ -23,7 +23,7 @@ pages_map(void *addr, size_t size)
 	 * If VirtualAlloc can't allocate at the given address when one is
 	 * given, it fails and returns NULL.
 	 */
-#ifdef USE_LARGEPAGE
+#ifdef ARMA_EXTENSION
 	if (LargePageSupport)
 	{
 		ret = VirtualAlloc(addr, size, MEM_COMMIT | MEM_RESERVE | MEM_LARGE_PAGES,
@@ -34,11 +34,6 @@ pages_map(void *addr, size_t size)
 		ret = VirtualAlloc(addr, size, MEM_COMMIT | MEM_RESERVE,
 			PAGE_READWRITE);
 	}
-#else
-	ret = VirtualAlloc(addr, size, MEM_COMMIT | MEM_RESERVE,
-		PAGE_READWRITE);
-#endif
-#ifdef ARMA_EXTENSION
     if (ret)
     {
       MEMORY_BASIC_INFORMATION info;
@@ -47,6 +42,9 @@ pages_map(void *addr, size_t size)
 		      je_atomic_add_uint32(&MappedMemory, info.RegionSize);
       }
     }
+#else
+	ret = VirtualAlloc(addr, size, MEM_COMMIT | MEM_RESERVE,
+		PAGE_READWRITE);
 #endif
     return ret;
 #else

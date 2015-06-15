@@ -611,10 +611,8 @@ void	jemalloc_postfork_child(void);
 #include "msvc_compat/win_sbrk.h"
 #endif
 
-#ifdef USE_LARGEPAGE
-BOOL LargePageSupport;
-#endif
 #ifdef ARMA_EXTENSION
+BOOL LargePageSupport;
 uint32_t MappedMemory;
 #endif
 
