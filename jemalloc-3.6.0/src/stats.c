@@ -341,14 +341,14 @@ stats_print(void (*write_cb)(void *, const char *), void *cbopaque,
 
 		CTL_GET("version", &cpv, const char *);
 		malloc_cprintf(write_cb, cbopaque, "Version: %s\n", cpv);
-#ifdef ARMA_EXTENSION
+#ifdef USE_LARGEPAGE
 		if (LargePageSupport)
 		{
 			malloc_cprintf(write_cb, cbopaque, "Large Page Support Enabled");
 		}
 		else
 		{
-			malloc_cprintf(write_cb, cbopaque, "Large Page Support Disabled !!!");
+			malloc_cprintf(write_cb, cbopaque, "Large Page Support Disabled !!!\n");
 		}
 #endif
 		CTL_GET("config.debug", &bv, bool);

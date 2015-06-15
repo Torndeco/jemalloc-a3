@@ -141,7 +141,11 @@
 
 /* One page is 2^STATIC_PAGE_SHIFT bytes. */
 #ifdef _WIN32
+#ifdef USE_LARGEPAGE
+#define STATIC_PAGE_SHIFT       18
+#else
 #define STATIC_PAGE_SHIFT       12
+#endif
 #else
 #define STATIC_PAGE_SHIFT       16
 #endif
