@@ -1,4 +1,4 @@
-#ifdef ARMA_EXTENSION
+#ifdef ARMA_MALLOC
 #include <windows.h>
 #ifndef __cplusplus
 typedef BOOL bool;

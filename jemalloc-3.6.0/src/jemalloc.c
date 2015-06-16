@@ -450,9 +450,39 @@ malloc_conf_init(void)
 			}
 			break;
 		case 1: {
-			const char *filename = "jemalloc_a3.conf";
+#ifndef _WIN32
+			int linklen = 0;
+			int saved_errno = errno;
+			const char *linkname =
+#  ifdef JEMALLOC_PREFIX
+				"/etc/"JEMALLOC_PREFIX"malloc.conf"
+#  else
+				"/etc/malloc.conf"
+#  endif
+				;
+
+			/*
+			* Try to use the contents of the "/etc/malloc.conf"
+			* symbolic link's name.
+			*/
+			linklen = readlink(linkname, buf, sizeof(buf) - 1);
+			if (linklen == -1) {
+				/* No configuration specified. */
+				linklen = 0;
+				/* restore errno */
+				set_errno(saved_errno);
+			}
+			buf[linklen] = '\0';
+			opts = buf;
+			break;
+#else
 			FILE *conf_file;
+#ifdef ARMA_MALLOC
 			conf_file = fopen("jemalloc_a3.conf","r");
+#endif
+#ifdef ARMA_EXTENSION
+			conf_file = fopen("malloc.conf","r");
+#endif
 			if (conf_file!=NULL)
 			{
 				fseek(conf_file, 0, SEEK_END);
@@ -467,12 +497,17 @@ malloc_conf_init(void)
 				opts = buf;
 			}
 			break;
+#endif
 		} case 2: {
 			const char *envname =
 #ifdef JEMALLOC_PREFIX
-			    JEMALLOC_CPREFIX"MALLOC_CONF"
-#else
-			    "MALLOC_CONF"
+			    JEMALLOC_CPREFIX"MALLOC_CONF_A3"
+#endif
+#ifdef ARMA_MALLOC
+			    "JEMALLOC_CONF_A3"
+#endif
+#ifdef ARMA_EXTENSION
+				"MALLOC_CONF"
 #endif
 			    ;
 

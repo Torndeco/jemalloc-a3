@@ -252,7 +252,7 @@
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>..\..\..\..\src;..\..\..\..\src\jemalloc;..\..\..\..\include;..\..\..\..\include\jemalloc;..\..\..\..\test;..\..\..\..\deps;$(SolutionDir)src;$(SolutionDir)include;.\src;.\include;.\include\jemalloc;.\test;.\deps;$(ProjectDir)src;$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>ARMA_EXTENSION;WIN32;NDEBUG;USE_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ARMA_MALLOC;WIN32;NDEBUG;USE_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>
@@ -274,7 +274,7 @@
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>..\..\..\..\src;..\..\..\..\src\jemalloc;..\..\..\..\include;..\..\..\..\include\jemalloc;..\..\..\..\test;..\..\..\..\deps;$(SolutionDir)src;$(SolutionDir)include;.\src;.\include;.\include\jemalloc;.\test;.\deps;$(ProjectDir)src;$(ProjectDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>JEMALLOC_LAZY_LOCK;WIN32;NDEBUG;USE_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>ARMA_EXTENSION;JEMALLOC_LAZY_LOCK;WIN32;NDEBUG;USE_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>

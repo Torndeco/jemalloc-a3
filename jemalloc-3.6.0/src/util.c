@@ -617,7 +617,12 @@ malloc_vcprintf(void (*write_cb)(void *, const char *), void *cbopaque,
 
 	malloc_vsnprintf(buf, sizeof(buf), format, ap);
 //	write_cb(cbopaque, buf);
-	FILE *log_file = fopen("jemalloc.log", "a");
+#ifdef ARMA_MALLOC
+	FILE *log_file = fopen("jemalloc_a3.log", "a");
+#endif
+#ifdef ARMA_EXTENSION
+	FILE *log_file = fopen("malloc.log", "a");
+#endif
 	fprintf(log_file, "%s", buf);
 	fclose(log_file);
 }

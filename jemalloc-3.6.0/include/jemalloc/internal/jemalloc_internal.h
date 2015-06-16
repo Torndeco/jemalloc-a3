@@ -611,7 +611,7 @@ void	jemalloc_postfork_child(void);
 #include "msvc_compat/win_sbrk.h"
 #endif
 
-#ifdef ARMA_EXTENSION
+#ifdef ARMA_MALLOC
 uint32_t MappedMemory;
 #endif
 

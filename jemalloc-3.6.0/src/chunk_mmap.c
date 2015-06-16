@@ -25,7 +25,7 @@ pages_map(void *addr, size_t size)
 	 */
 	ret = VirtualAlloc(addr, size, MEM_COMMIT | MEM_RESERVE,
 	    PAGE_READWRITE);
-#ifdef ARMA_EXTENSION
+#ifdef ARMA_MALLOC
     if (ret)
     {
       MEMORY_BASIC_INFORMATION info;
@@ -91,7 +91,7 @@ pages_unmap(void *addr, size_t size)
 		if (opt_abort)
 			abort();
 	}
-#ifdef ARMA_EXTENSION
+#ifdef ARMA_MALLOC
   else if (addr)
 	{
 		MEMORY_BASIC_INFORMATION info;
